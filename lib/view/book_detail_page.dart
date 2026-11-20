@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../model/book.dart';
+import '../service/api_service.dart';
 
 class BookDetailPage extends StatelessWidget {
   const BookDetailPage({super.key, required this.book});
@@ -35,7 +36,7 @@ class BookDetailPage extends StatelessWidget {
               _item('Original Title', book.originalTitle),
               _item('Release Date', book.releaseDate),
               _item('Description', book.description),
-             _item('pages', book.pages),
+             _item('pages', book.pages.toString()),
               _item('Index', book.index.toString()),
 
             ],

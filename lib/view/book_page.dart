@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../controller/book_controller.dart';
 import '../service/auth_service.dart';
 import '../view/book_detail_page.dart';
 import '../view/spell_page.dart';
+import '../view/profile.dart';
 
 class BookPage extends StatelessWidget {
   BookPage({super.key});
@@ -15,6 +17,10 @@ class BookPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Harry Potter Book'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () => Get.to(() => const ProfileScreen()),
+          ),
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: AuthService.logout,

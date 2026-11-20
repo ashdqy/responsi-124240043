@@ -4,7 +4,7 @@ import '../model/book.dart';
 import '../model/spell.dart';
 
 class ApiService {
-  final String _baseUrl = 'https://potterapi-fedeperin.vercel.app/en/books';
+  final String _baseUrl = 'https://potterapi-fedeperin.vercel.app/en';
 
   Future<List<Book>> fetchbooks() async {
     final response = await http.get(Uri.parse('$_baseUrl/books'));
@@ -12,6 +12,12 @@ class ApiService {
     print(result);
     return result.map((item) => Book.fromJson(item)).toList();
   }
+
+  Future<Book> fetchBookDetail(int index) async {
+  final response = await http.get(Uri.parse('$_baseUrl/books?index=$index'));
+  final result = jsonDecode(response.body);
+  return Book.fromJson(result);
+}
 
   Future<List<Spell>> fetchSpells() async {
     final response = await http.get(Uri.parse('$_baseUrl/spells'));

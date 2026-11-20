@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../view/book_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -32,9 +33,20 @@ class _LoginPageState extends State<LoginPage> {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
 
-    if (username == 'admin' && password == 'admin123') {
+    if (username.length < 3 || username.length > 10) {
+      Get.snackbar(
+        'Failed!',
+        'Username harus 3 sampai 10 karakter',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    if (password == '124240043') {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('loginData', true);
+      await prefs.setString('username', username);
 
       Get.off(() => BookPage());
       Get.snackbar(
@@ -72,8 +84,10 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('Login',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  const Text(
+                    'Login',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   TextField(
                     controller: _usernameController,
                     decoration: const InputDecoration(labelText: 'Username'),

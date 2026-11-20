@@ -3,7 +3,7 @@ class Book {
   final String originalTitle;
   final String releaseDate;
   final String description;
-  final String pages;
+  final int pages;
   final int number;
   final String cover;
   final int index;
@@ -21,13 +21,13 @@ class Book {
 
   factory Book.fromJson(Map<String, dynamic> jsonData) {
     return Book(
-      title: jsonData['Title'] ?? '',
-      originalTitle: jsonData['OriginalTitle'] ?? '',
-      releaseDate: jsonData['ReleaseDate'] ?? '',
-      description: jsonData['Description'] ?? '',
-      pages: jsonData['Pages'] ?? [],
-      number : int.tryParse(jsonData['Number'] ?? '0') ?? 0,
-      cover: jsonData['Cover'] ?? '',
+      title: jsonData['title'] ?? '',
+      originalTitle: jsonData['originalTitle'] ?? '',
+      releaseDate: jsonData['releaseDate'] ?? '',
+      description: jsonData['description'] ?? '',
+      pages: int.tryParse(jsonData['pages'] ?? '0') ?? 0,
+      number : int.tryParse(jsonData['number'] ?? '0') ?? 0,
+      cover: jsonData['cover'] ?? '',
       index: jsonData['index'] ?? 0,
     );
   }
