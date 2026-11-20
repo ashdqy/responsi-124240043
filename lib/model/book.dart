@@ -25,8 +25,8 @@ class Book {
       originalTitle: jsonData['originalTitle'] ?? '',
       releaseDate: jsonData['releaseDate'] ?? '',
       description: jsonData['description'] ?? '',
-      pages: int.tryParse(jsonData['pages'] ?? '0') ?? 0,
-      number : int.tryParse(jsonData['number'] ?? '0') ?? 0,
+      pages: jsonData['pages'] ?? 0,
+      number: jsonData['number'] ?? 0,
       cover: jsonData['cover'] ?? '',
       index: jsonData['index'] ?? 0,
     );

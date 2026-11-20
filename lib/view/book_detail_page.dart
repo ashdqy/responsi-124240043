@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../model/book.dart';
 import '../service/api_service.dart';
 
@@ -14,7 +15,10 @@ class BookDetailPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
-          Text(value.isEmpty ? '-' : value, style: const TextStyle(fontSize: 16)),
+          Text(
+            value.isEmpty ? '-' : value,
+            style: const TextStyle(fontSize: 16),
+          ),
         ],
       ),
     );
@@ -25,24 +29,37 @@ class BookDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(book.title)),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(child: Image.network(book.cover)),
-              //_item('Number', book.number),
-              _item('Title', book.title),
-              _item('Original Title', book.originalTitle),
-              _item('Release Date', book.releaseDate),
-              _item('Description', book.description),
-             _item('pages', book.pages.toString()),
-              _item('Index', book.index.toString()),
-
-            ],
-          ),
-        ),
+        child: FutureBuilder<Book>(
+          future: ApiService().fetchBookDetail(book.index),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(child: Text('${snapshot.error}'));
+            }
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final data = snapshot.data!;
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(child: Image.network(data.cover)),
+                  _item('Number', data.number.toString()),
+                  _item('Title', data.title),
+                  _item('Original Title', data.originalTitle),
+                  _item('Release Date', data.releaseDate),
+                  _item('Description', data.description),
+                  _item('Pages', data.pages.toString()),
+                  _item('Index', data.index.toString()),
+                ],
+              ),
+            ),
+          );
+        },
       ),
+    ),
     );
   }
 }
